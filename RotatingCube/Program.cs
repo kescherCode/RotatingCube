@@ -78,7 +78,7 @@ namespace RotatingCube
             while (!exit)
             {
                 Print2DCube(angX, angY, angZ);
-                keyPress = Console.ReadKey();
+                keyPress = Console.ReadKey(true);
                 altDown = (keyPress.Modifiers & ConsoleModifiers.Alt) != 0;
                 shiftDown = (keyPress.Modifiers & ConsoleModifiers.Shift) != 0;
                 if (shiftDown)
