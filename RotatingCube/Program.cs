@@ -73,56 +73,75 @@ namespace RotatingCube
             // Starting angle
             float angX = 0f, angY = 0f, angZ = 0f;
             // If escape is pressed later, the program will exit
+            Random randFactor = new Random();
             bool exit = false;
+            bool manualControl = true;
             float rotationFactor = 1f;
             while (!exit)
             {
                 Print2DProjection(angX, angY, angZ);
-                keyPress = Console.ReadKey(true);
-                altDown = (keyPress.Modifiers & ConsoleModifiers.Alt) != 0;
-                shiftDown = (keyPress.Modifiers & ConsoleModifiers.Shift) != 0;
-                if (shiftDown)
+                if (manualControl)
                 {
-                    if (altDown) rotationFactor = 1f;
-                    else rotationFactor = 0.5f;
+                    keyPress = Console.ReadKey(true);
+                    altDown = (keyPress.Modifiers & ConsoleModifiers.Alt) != 0;
+                    shiftDown = (keyPress.Modifiers & ConsoleModifiers.Shift) != 0;
+                    if (shiftDown)
+                    {
+                        if (altDown) rotationFactor = 1f;
+                        else rotationFactor = 0.5f;
+                    }
+                    else if (altDown) rotationFactor = 2f;
+                    else rotationFactor = 1f;
+                    switch (keyPress.Key)
+                    {
+                        case ConsoleKey.W:
+                            angX += rotationFactor;
+                            break;
+                        case ConsoleKey.A:
+                            angY += rotationFactor;
+                            break;
+                        case ConsoleKey.S:
+                            angX -= rotationFactor;
+                            break;
+                        case ConsoleKey.D:
+                            angY -= rotationFactor;
+                            break;
+                        case ConsoleKey.J:
+                            angZ += rotationFactor;
+                            break;
+                        case ConsoleKey.K:
+                            angZ -= rotationFactor;
+                            break;
+                        case ConsoleKey.R:
+                            angX = 0f; angY = 0f; angZ = 0f;
+                            break;
+                        case ConsoleKey.M:
+                            manualControl = false;
+                            break;
+                        case ConsoleKey.Escape:
+                            exit = true;
+                            break;
+                    }
                 }
-                else if (altDown) rotationFactor = 2f;
-                else rotationFactor = 1f;
-                switch (keyPress.Key)
+                else
                 {
-                    case ConsoleKey.W:
-                    case ConsoleKey.UpArrow:
-                        angX += rotationFactor;
-                        break;
-                    case ConsoleKey.A:
-                    case ConsoleKey.LeftArrow:
-                        angY += rotationFactor;
-                        break;
-                    case ConsoleKey.S:
-                    case ConsoleKey.DownArrow:
-                        angX -= rotationFactor;
-                        break;
-                    case ConsoleKey.D:
-                    case ConsoleKey.RightArrow:
-                        angY -= rotationFactor;
-                        break;
-                    case ConsoleKey.Delete:
-                    case ConsoleKey.J:
-                        angZ += rotationFactor;
-                        break;
-                    case ConsoleKey.End:
-                    case ConsoleKey.K:
-                        angZ -= rotationFactor;
-                        break;
-                    case ConsoleKey.R:
-                    case ConsoleKey.Enter:
-                        angX = 0f; angY = 0f; angZ = 0f;
-                        break;
-                    case ConsoleKey.Escape:
-                        exit = true;
-                        break;
-                    default:
-                        break;
+                    if (Console.KeyAvailable)
+                    {
+                        keyPress = Console.ReadKey(true);
+                        switch (keyPress.Key)
+                        {
+                            case ConsoleKey.M:
+                                manualControl = true;
+                                break;
+                            case ConsoleKey.Escape:
+                                exit = true;
+                                break;
+                        }
+                    }
+                    angX += randFactor.Next(1, 2);
+                    angY += randFactor.Next(1, 2);
+                    angZ += randFactor.Next(1, 2);
+                    System.Threading.Thread.Sleep(50);
                 }
                 Console.Clear();
             }
