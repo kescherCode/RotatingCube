@@ -24,8 +24,8 @@ namespace RotatingCube
         {
             Console.CursorVisible = false;
             Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
-            Console.WindowHeight = Console.BufferHeight = 40;
-            Console.BufferWidth = Console.WindowWidth = 60;
+            Console.WindowHeight = Console.BufferHeight = 30;
+            Console.BufferWidth = Console.WindowWidth = 50;
             Console.Title = "Press ESC to exit | Rotating Cube Demo by Jeremy Kescher";
         }
         static void Print2DCube(float angX, float angY, float angZ)
@@ -42,7 +42,7 @@ namespace RotatingCube
                     // Projects the point into 2d space. Acts as a kind of camera setting.
                     Point3D q = r.Project(40, 40, 300, 4);
                     // Setting the cursor to a projecting position
-                    Console.SetCursorPosition(((int)q.x + 270) / 10, ((int)q.y + 180) / 10);
+                    Console.SetCursorPosition(((int)q.x + 200) / 10, ((int)q.y + 135) / 10);
                     Console.Write('█');
                 }
             }
