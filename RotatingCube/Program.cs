@@ -105,6 +105,10 @@ namespace RotatingCube
                     case ConsoleKey.K:
                         angZ -= altDown ? 2f : 1f;
                         break;
+                    case ConsoleKey.R:
+                    case ConsoleKey.Enter:
+                        angX = 0f; angY = 0f; angZ = 0f;
+                        break;
                     case ConsoleKey.Escape:
                         exit = true;
                         break;
