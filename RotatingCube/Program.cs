@@ -28,7 +28,7 @@ namespace RotatingCube
             Console.BufferWidth = Console.WindowWidth = 60;
             Console.Title = "Press ESC to exit | Rotating Cube Demo by Jeremy Kescher";
         }
-        static void Print2DCube(float angX, float angY, float angZ)
+        static void Print2DProjection(float angX, float angY, float angZ)
         {
             foreach (var line in lines)
             {
@@ -77,7 +77,7 @@ namespace RotatingCube
             float rotationFactor = 1f;
             while (!exit)
             {
-                Print2DCube(angX, angY, angZ);
+                Print2DProjection(angX, angY, angZ);
                 keyPress = Console.ReadKey(true);
                 altDown = (keyPress.Modifiers & ConsoleModifiers.Alt) != 0;
                 shiftDown = (keyPress.Modifiers & ConsoleModifiers.Shift) != 0;
