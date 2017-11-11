@@ -9,7 +9,7 @@ namespace RotatingCube
     {
         static IEnumerable<CornerData> lines;
         static ConsoleKeyInfo keyPress;
-        static bool altDown;
+        static bool altDown, shiftDown;
         class CornerData
         {
             public Point3D a;
@@ -74,36 +74,45 @@ namespace RotatingCube
             float angX = 0f, angY = 0f, angZ = 0f;
             // If escape is pressed later, the program will exit
             bool exit = false;
+            float rotationFactor = 1f;
             while (!exit)
             {
                 Print2DCube(angX, angY, angZ);
                 keyPress = Console.ReadKey();
                 altDown = (keyPress.Modifiers & ConsoleModifiers.Alt) != 0;
+                shiftDown = (keyPress.Modifiers & ConsoleModifiers.Shift) != 0;
+                if (shiftDown)
+                {
+                    if (altDown) rotationFactor = 1f;
+                    else rotationFactor = 0.5f;
+                }
+                else if (altDown) rotationFactor = 2f;
+                else rotationFactor = 1f;
                 switch (keyPress.Key)
                 {
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
-                        angX += altDown ? 2f : 1f;
+                        angX += rotationFactor;
                         break;
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
-                        angY += altDown ? 2f : 1f;
+                        angY += rotationFactor;
                         break;
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
-                        angX -= altDown ? 2f : 1f;
+                        angX -= rotationFactor;
                         break;
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
-                        angY -= altDown ? 2f : 1f;
+                        angY -= rotationFactor;
                         break;
                     case ConsoleKey.Delete:
                     case ConsoleKey.J:
-                        angZ += altDown ? 2f : 1f;
+                        angZ += rotationFactor;
                         break;
                     case ConsoleKey.End:
                     case ConsoleKey.K:
-                        angZ -= altDown ? 2f : 1f;
+                        angZ -= rotationFactor;
                         break;
                     case ConsoleKey.R:
                     case ConsoleKey.Enter:
