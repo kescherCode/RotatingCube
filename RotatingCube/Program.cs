@@ -24,7 +24,7 @@ namespace RotatingCube
         {
             Console.CursorVisible = false;
             Console.InputEncoding = Console.OutputEncoding = Encoding.Unicode;
-            Console.WindowHeight = Console.BufferHeight = 30;
+            Console.BufferHeight = Console.WindowHeight = 30;
             Console.BufferWidth = Console.WindowWidth = 50;
             Console.Title = "Press ESC to exit | Rotating Cube Demo by Jeremy Kescher";
         }
