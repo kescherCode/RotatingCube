@@ -11,4 +11,7 @@ Controls:
   - Press M to toggle between manual (default) and automatic modes. Also note that you can't control the cube in this mode, not even with modifiers like SHIFT and ALT.
   - Press ESC to exit the program at any time.
 
-Nothing too special. Feel free to tell your friends it was yours or sell it (lol), it's public domain!
+Nothing too special. Feel free to tell your friends it was yours or sell it (lol), it's public domain!<br>
+<a href="http://www.wtfpl.net/"><img
+       src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png"
+       width="80" height="15" alt="WTFPL" /></a>
