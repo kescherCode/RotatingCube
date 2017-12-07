@@ -30,7 +30,7 @@ namespace RotatingCube
         }
         static void Print2DProjection(float angX, float angY, float angZ)
         {
-            foreach (var line in lines)
+            foreach (CornerData line in lines)
             {
                 for (int i = 0; i < 25; i++)
                 {
@@ -138,12 +138,13 @@ namespace RotatingCube
                                 break;
                         }
                     }
-                    angX += randFactor.Next(1, 2);
-                    angY += randFactor.Next(1, 2);
-                    angZ += randFactor.Next(1, 2);
-                    System.Threading.Thread.Sleep(50);
+                    angX += randFactor.Next(0, 3);
+                    angY += randFactor.Next(0, 3);
+                    angZ += randFactor.Next(0, 3);
+                    System.Threading.Thread.Sleep(25);
                 }
                 Console.Clear();
+                Console.CursorVisible = false; // Workaround for cursor being visible if you click into the window
             }
         }
     }
