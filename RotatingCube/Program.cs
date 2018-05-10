@@ -197,36 +197,46 @@ namespace RotatingCube
         public Point3D RotateX(float angle)
         {
             float rad = angle * (float)Math.PI / 180;
+
             float cosa = (float)Math.Cos(rad);
             float sina = (float)Math.Sin(rad);
-            float tempY = y;
+
+            float oldY = y;
+            // New Y and Z axis'
             y = y * cosa - z * sina;
-            z = tempY * sina + z * cosa;
+            z = oldY * sina + z * cosa;
             return this;
         }
 
         public Point3D RotateY(float angle)
         {
             float rad = angle * (float)Math.PI / 180;
+
             float cosa = (float)Math.Cos(rad);
             float sina = (float)Math.Sin(rad);
-            float tempX = x;
+
+            float oldX = x;
+            // New X and Z axis'
             x = z * sina + x * cosa;
-            z = z * cosa - tempX * sina;
+            z = z * cosa - oldX * sina;
             return this;
         }
 
         public Point3D RotateZ(float angle)
         {
             float rad = angle * (float)Math.PI / 180;
+
             float cosa = (float)Math.Cos(rad);
             float sina = (float)Math.Sin(rad);
-            float tempX = x;
+
+            float oldX = x;
+            // New X and Y axis'
             x = x * cosa - y * sina;
-            y = y * cosa + tempX * sina;
+            y = y * cosa + oldX * sina;
             return this;
         }
 
+        // Project the current Point into 2D plotted space using X and Y axis'
         public Point3D Project(float width, float height, float fov, float viewDist)
         {
             float factor = fov / (viewDist + z);
@@ -234,6 +244,7 @@ namespace RotatingCube
             return new Point3D(p.x * factor + width / 2, -p.y * factor + height / 2, 1);
         }
 
+        // Returns the sum of all coordinates squared.
         public float Length { get { return (float)Math.Sqrt(x * x + y * y + z * z); } }
         public static Point3D operator *(float scale, Point3D x)
         {
