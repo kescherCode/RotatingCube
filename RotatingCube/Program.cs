@@ -2,11 +2,33 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace RotatingCube
 {
-    class Cubes
+    class Cube
     {
+        internal static class DllImports
+        {
+            [StructLayout(LayoutKind.Sequential)]
+            public struct Coords
+            {
+                public short X;
+                public short Y;
+                public Coords(short x, short y)
+                {
+                    X = x;
+                    Y = y;
+                }
+
+            }
+            [DllImport("kernel32.dll")]
+            public static extern IntPtr GetStdHandle(int handle);
+            public const int CONSOLE = -11;
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern bool SetConsoleDisplayMode(IntPtr ConsoleOutput, uint Flags, out Coords NewScreenBufferDimensions);
+        }
+
         static IEnumerable<CornerData> lines;
         static ConsoleKeyInfo keyPress;
         static bool altDown, shiftDown;
@@ -27,6 +49,7 @@ namespace RotatingCube
             Console.BufferHeight = Console.WindowHeight = 30;
             Console.BufferWidth = Console.WindowWidth = 60;
             Console.Title = "Press ESC to exit | Rotating Cube Demo by Jeremy Kescher";
+            SetFullscreen();
         }
         static void Print2DProjection(float angX, float angY, float angZ)
         {
@@ -40,12 +63,20 @@ namespace RotatingCube
                     // Rotates the point relative to all the angles.
                     Point3D r = point.RotateX(angX).RotateY(angY).RotateZ(angZ);
                     // Projects the point into 2d space. Acts as a kind of camera setting.
-                    Point3D q = r.Project(40, 40, 300, 4);
+                    Point3D q = r.Project(40, 40, 350, 4);
                     // Setting the cursor to a projecting position
-                    Console.SetCursorPosition(((int)q.x + 265) / 10, ((int)q.y + 135) / 10);
-                    Console.Write('█');
+                    Console.SetCursorPosition(((int)q.x + 800) / 10, ((int)q.y + 200) / 10);
+                    Console.Write('*'); // █
                 }
             }
+        }
+
+        static void SetFullscreen()
+        {
+            IntPtr consoleSession = DllImports.GetStdHandle(DllImports.CONSOLE);   // get handle for current console session
+            DllImports.SetConsoleDisplayMode(consoleSession, 1, out _); // set the console to fullscreen
+            // Note: 'out _' instantly disposes the out parameter. I only use the Coords struct in order to make the imported function work.
+            Console.SetBufferSize(Console.BufferWidth, Console.BufferHeight);
         }
         static void Main()
         {
@@ -64,7 +95,7 @@ namespace RotatingCube
                 new Point3D(1, 1, 1)
             };
 
-            // A LINQ query getting all corners for 2D space, returning them to a class-wide struct
+            // A LINQ query getting all corners neccessary for 2D space, returning them to a class-wide struct
             lines = from a in corners
                     from b in corners
                     where (a - b).Length == 2 && a.x + a.y + a.z > b.x + b.y + b.z
